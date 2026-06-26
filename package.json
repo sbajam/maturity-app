@@ -1,0 +1,40 @@
+{
+  "name": "website",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "start": "cross-env PORT=8603 node .output/server/index.mjs"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.23",
+    "@heroicons/vue": "^2.2.0",
+    "@iconify-json/fa6-brands": "^1.2.6",
+    "@iconify-json/fa6-solid": "^1.2.4",
+    "@iconify-json/ic": "^1.2.4",
+    "@iconify-json/logos": "^1.2.10",
+    "@iconify-json/lucide": "^1.2.106",
+    "@iconify-json/material-symbols": "^1.2.61",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify-json/skill-icons": "^1.2.4",
+    "@pinia/nuxt": "^0.11.3",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.19",
+    "cross-env": "^10.1.0",
+    "nuxt": "^4.2.2",
+    "nuxt-marquee": "^1.0.4",
+    "uuid": "^14.0.0",
+    "vue": "^3.5.26",
+    "vue-router": "^4.6.4",
+    "vue3-slide-up-down": "^1.2.5"
+  },
+  "devDependencies": {
+    "@nuxt/icon": "^2.1.1",
+    "@nuxtjs/tailwindcss": "^6.14.0"
+  }
+}

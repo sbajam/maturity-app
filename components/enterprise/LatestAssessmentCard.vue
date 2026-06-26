@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getAssessmentStatusLabel, getAssessmentStatusVariant } from "~/utils/status";
 import { formatDate } from "~/utils/date"
 import type { Assessment } from "~/types"
 
@@ -16,7 +17,9 @@ defineProps<{
             </AppDescriptionItem>
 
             <AppDescriptionItem label="Status" icon="lucide:activity">
-                <AppStatusBadge :status="assessment.status" />
+                <UiAppBadge :variant="getAssessmentStatusVariant(assessment.status)">
+                    {{ getAssessmentStatusLabel(assessment.status) }}
+                </UiAppBadge>
             </AppDescriptionItem>
 
             <AppDescriptionItem label="Overall Score" icon="lucide:badge-percent">

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getEnabledLabel, getEnabledVariant } from "~/utils/status";
 import type { DataSource } from "~/types"
 
 const props = defineProps<{
@@ -62,11 +63,9 @@ const disabledSources = computed(() =>
               </div>
 
             </div>
-
-            <AppStatusBadge :status="source.enabled
-                ? 'completed'
-                : 'draft'
-              " />
+            <UiAppBadge :variant="getEnabledVariant(source.enabled)">
+              {{ getEnabledLabel(source.enabled) }}
+            </UiAppBadge>
 
           </div>
 

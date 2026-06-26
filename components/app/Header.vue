@@ -1,25 +1,20 @@
+<script setup lang="ts">
+</script>
+
 <template>
-
-    <div class="flex h-screen bg-slate-50">
-
-        <AppSidebar />
-
-        <div class="flex flex-1 flex-col overflow-hidden">
-
-            <AppHeader />
-
-            <main class="flex-1 overflow-auto">
-
-                <AppContainer>
-
-                    <slot />
-
-                </AppContainer>
-
-            </main>
-
+    <header class="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-8">
+        <div class="flex items-center gap-6">
+            <AppBreadcrumb />
         </div>
 
-    </div>
+        <div class="flex items-center gap-4">
 
+            <AppSearch />
+
+            <AppNotifications />
+
+            <AppUserMenu />
+
+        </div>
+    </header>
 </template>

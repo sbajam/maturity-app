@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="T extends { id: number }">
+// Generic, slot-based data table with loading and empty states.
 import type { DataTableColumn } from "~/types/ui"
 
 defineSlots<{

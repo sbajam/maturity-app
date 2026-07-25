@@ -1,3 +1,4 @@
+// Evidence entity type extracted from a data source during an assessment.
 import type {
   BaseEntity,
   ID,

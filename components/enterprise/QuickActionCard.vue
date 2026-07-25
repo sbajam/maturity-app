@@ -1,3 +1,4 @@
+<!-- Card with shortcut buttons for common enterprise actions. -->
 <template>
     <section class="rounded-2xl border border-slate-200 bg-white">
         <div class="border-b border-slate-100 px-6 py-5">

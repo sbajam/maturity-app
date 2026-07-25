@@ -1,3 +1,4 @@
+// Barrel file re-exporting all domain types.
 export * from "./common"
 
 export * from "./enterprise"
@@ -19,3 +20,5 @@ export * from "./assessment-result"
 export * from "./navigation"
 
 export * from "./ui"
+
+export * from "./wizard"

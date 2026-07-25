@@ -1,3 +1,4 @@
+// Shared UI types: badge variants, select options, and data table column config.
 export type BadgeVariant =
     | "primary"
     | "success"

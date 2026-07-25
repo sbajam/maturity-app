@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Enterprise page header with logo, metadata, and edit/new-assessment actions.
 import type { Enterprise } from "~/types"
 import { formatDate } from "~/utils/date"
 
@@ -30,7 +31,8 @@ const emit = defineEmits<{
                 </h1>
 
                 <p v-if="enterprise.description"
-                    class="mt-2 max-w-3xl break-words whitespace-pre-wrap text-sm leading-6 text-slate-600">
+                    class="mt-2 max-w-3xl break-words whitespace-pre-wrap text-sm leading-6 text-slate-600"
+                    dir="auto">
                     {{ enterprise.description }}
                 </p>
 

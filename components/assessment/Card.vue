@@ -1,6 +1,8 @@
 <script setup lang="ts">
+// Assessment overview card showing name, status, overall score, and completion date.
 import type { Assessment } from "~/types"
-
+import { formatScore } from "~/utils/maturity"
+import { formatDate } from "~/utils/date"
 import {
   getAssessmentStatusLabel,
   getAssessmentStatusVariant,
@@ -14,8 +16,6 @@ defineProps<{
 <template>
   <AppCard>
     <div class="flex flex-col gap-8 lg:flex-row lg:justify-between">
-      <!-- Left -->
-
       <div class="flex-1">
         <div class="flex items-center gap-3">
           <div
@@ -33,34 +33,27 @@ defineProps<{
             </h1>
 
             <p class="mt-1 text-sm text-slate-500">
-              Assessment Overview
+              v{{ assessment.version }} · Assessment Overview
             </p>
           </div>
         </div>
 
         <p
           class="mt-6 max-w-3xl leading-7 text-slate-600"
+          dir="auto"
         >
           {{
-            assessment.description ||
-            "No description has been provided for this assessment."
+            assessment.description
+            || "No description has been provided for this assessment."
           }}
         </p>
       </div>
 
-      <!-- Status -->
-
       <div class="flex items-start">
         <UiBadge
-          :variant="getAssessmentStatusVariant(
-            assessment.status,
-          )"
+          :variant="getAssessmentStatusVariant(assessment.status)"
         >
-          {{
-            getAssessmentStatusLabel(
-              assessment.status,
-            )
-          }}
+          {{ getAssessmentStatusLabel(assessment.status) }}
         </UiBadge>
       </div>
     </div>
@@ -68,73 +61,40 @@ defineProps<{
     <div
       class="mt-8 grid grid-cols-1 gap-4 border-t border-slate-200 pt-6 md:grid-cols-3"
     >
-      <!-- Score -->
-
       <div>
-        <p
-          class="text-xs font-semibold uppercase tracking-wide text-slate-500"
-        >
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
           Overall Score
         </p>
 
-        <div class="mt-2 flex items-end gap-1">
-          <span
-            class="text-4xl font-bold text-blue-600"
-          >
-            {{
-              assessment.overallScore ??
-              "—"
-            }}
-          </span>
-
-          <span
-            v-if="assessment.overallScore"
-            class="pb-1 text-slate-500"
-          >
-            %
-          </span>
+        <div class="mt-2 text-4xl font-bold text-blue-600">
+          {{ formatScore(assessment.overallScore) }}
         </div>
       </div>
 
-      <!-- Status -->
-
       <div>
-        <p
-          class="text-xs font-semibold uppercase tracking-wide text-slate-500"
-        >
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
           Current Status
         </p>
 
         <div class="mt-3">
           <UiBadge
-            :variant="getAssessmentStatusVariant(
-              assessment.status,
-            )"
+            :variant="getAssessmentStatusVariant(assessment.status)"
           >
-            {{
-              getAssessmentStatusLabel(
-                assessment.status,
-              )
-            }}
+            {{ getAssessmentStatusLabel(assessment.status) }}
           </UiBadge>
         </div>
       </div>
 
-      <!-- Completed -->
-
       <div>
-        <p
-          class="text-xs font-semibold uppercase tracking-wide text-slate-500"
-        >
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
           Completed At
         </p>
 
-        <p
-          class="mt-3 font-medium text-slate-800"
-        >
+        <p class="mt-3 font-medium text-slate-800">
           {{
-            assessment.completedAt ??
-            "Not completed yet"
+            assessment.completedAt
+              ? formatDate(assessment.completedAt)
+              : "Not completed yet"
           }}
         </p>
       </div>

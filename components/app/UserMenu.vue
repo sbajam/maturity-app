@@ -1,3 +1,4 @@
+<!-- Current user avatar/name button shown at the bottom of the sidebar. -->
 <template>
 
     <button class="flex items-center gap-3 rounded-xl px-2 py-2 transition hover:bg-slate-100">

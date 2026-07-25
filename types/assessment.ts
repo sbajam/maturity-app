@@ -1,3 +1,4 @@
+// Assessment entity type and status enum.
 import type { BaseEntity, ID } from "./common"
 
 export const AssessmentStatuses = [
@@ -17,8 +18,11 @@ export type Assessment = BaseEntity & {
 
   description?: string
 
+  version: string
+
   status: AssessmentStatus
 
+  /** Likert scale 1-5 */
   overallScore?: number
 
   completedAt?: string

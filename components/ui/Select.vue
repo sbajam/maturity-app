@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Base labeled select dropdown with hint/error state support.
 import type { SelectOption } from "~/types/ui"
 
 const model = defineModel<string | number>()

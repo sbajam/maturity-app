@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Main navigation sidebar containing the logo, nav groups, and user menu.
 import { navigation } from "~/constants/navigation";
 </script>
 

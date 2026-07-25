@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Small colored status label used throughout the app (e.g. assessment/pipeline status).
 import type { BadgeVariant } from "~/types/ui"
 
 const props = withDefaults(

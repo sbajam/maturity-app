@@ -1,3 +1,4 @@
+// Shared base types: ID, ISO date string, JSON object, and base entity fields.
 // =========================================
 // Common Types
 // =========================================

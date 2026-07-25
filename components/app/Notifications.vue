@@ -1,3 +1,4 @@
+<!-- Notification bell button shown in the app header. -->
 <template>
 
     <button

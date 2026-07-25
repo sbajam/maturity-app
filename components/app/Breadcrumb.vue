@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Breadcrumb navigation generated automatically from the current route path.
 const route = useRoute()
 
 const breadcrumbs = computed(() => {

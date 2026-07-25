@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Label/value row used inside description lists (e.g. enterprise info, assessment summary).
 interface Props {
     label: string
 

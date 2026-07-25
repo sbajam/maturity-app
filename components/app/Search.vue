@@ -1,3 +1,4 @@
+<!-- Global search input displayed in the app header. -->
 <template>
 
     <div class="relative">

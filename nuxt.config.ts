@@ -1,3 +1,4 @@
+// Nuxt configuration for modules, CSS, and app-wide settings.
 
 export default defineNuxtConfig({
   devtools: { enabled: true },

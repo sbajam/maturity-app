@@ -1,3 +1,4 @@
+<!-- Application logo and product name shown in the sidebar. -->
 <template>
     <div class="flex items-center gap-3">
 

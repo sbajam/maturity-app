@@ -1,0 +1,148 @@
+// Mock assessment pipeline step records and helpers to create an empty pipeline.
+import type { AssessmentPipeline, PipelineStep } from "~/types"
+
+const PIPELINE_STEPS: PipelineStep[] = [
+  "collect_sources",
+  "extract_evidence",
+  "mapping",
+  "assessment",
+  "aggregation",
+  "report",
+]
+
+export function createEmptyPipeline(
+  assessmentId: number,
+  startId: number,
+): AssessmentPipeline[] {
+  return PIPELINE_STEPS.map((step, index) => ({
+    id: startId + index,
+    assessmentId,
+    step,
+    status: "waiting" as const,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }))
+}
+
+export const mockPipelines: Record<number, AssessmentPipeline[]> = {
+  1: [
+    {
+      id: 1,
+      assessmentId: 1,
+      step: "collect_sources",
+      status: "completed",
+      startedAt: "10:00",
+      completedAt: "10:02",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 2,
+      assessmentId: 1,
+      step: "extract_evidence",
+      status: "completed",
+      startedAt: "10:02",
+      completedAt: "10:05",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 3,
+      assessmentId: 1,
+      step: "mapping",
+      status: "completed",
+      startedAt: "10:05",
+      completedAt: "10:08",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 4,
+      assessmentId: 1,
+      step: "assessment",
+      status: "completed",
+      startedAt: "10:08",
+      completedAt: "10:12",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 5,
+      assessmentId: 1,
+      step: "aggregation",
+      status: "completed",
+      startedAt: "10:12",
+      completedAt: "10:14",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 6,
+      assessmentId: 1,
+      step: "report",
+      status: "completed",
+      startedAt: "10:14",
+      completedAt: "10:15",
+      createdAt: "",
+      updatedAt: "",
+    },
+  ],
+  2: [
+    {
+      id: 7,
+      assessmentId: 2,
+      step: "collect_sources",
+      status: "completed",
+      startedAt: "14:00",
+      completedAt: "14:03",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 8,
+      assessmentId: 2,
+      step: "extract_evidence",
+      status: "completed",
+      startedAt: "14:03",
+      completedAt: "14:08",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 9,
+      assessmentId: 2,
+      step: "mapping",
+      status: "completed",
+      startedAt: "14:08",
+      completedAt: "14:11",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 10,
+      assessmentId: 2,
+      step: "assessment",
+      status: "running",
+      startedAt: "14:11",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 11,
+      assessmentId: 2,
+      step: "aggregation",
+      status: "waiting",
+      createdAt: "",
+      updatedAt: "",
+    },
+    {
+      id: 12,
+      assessmentId: 2,
+      step: "report",
+      status: "waiting",
+      createdAt: "",
+      updatedAt: "",
+    },
+  ],
+  3: createEmptyPipeline(3, 13),
+}

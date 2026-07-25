@@ -1,169 +1,103 @@
 <script setup lang="ts">
-import type {
-    Assessment,
-    CapabilityAssessment,
-    DataSource,
-    Enterprise,
-} from "~/types"
+// Enterprise overview page with latest assessment summary, maturity score, and quick stats.
+const {
+  enterpriseId,
+  enterprise,
+  dataSources,
+  latestCompletedAssessment,
+  store,
+} = useEnterpriseRoute()
 
-// -----------------------------------------------------------------------------
-// Temporary Mock Data
-// Remove after API integration
-// -----------------------------------------------------------------------------
+const capabilityAssessments = computed(() => {
+  if (!latestCompletedAssessment.value)
+    return []
 
-const enterprise: Enterprise = {
-    id: 1,
-    createdAt: "2026-01-05T10:30:00Z",
-    updatedAt: "2026-02-10T09:00:00Z",
+  return store.getAllCapabilityAssessments(
+    latestCompletedAssessment.value.id,
+  )
+})
 
-    name: "Vornaco",
+const enabledSourcesCount = computed(() =>
+  dataSources.value.filter(item => item.enabled).length,
+)
 
-    description:
-        "شرکت ورناکو در زمینه توسعه نرم‌افزارهای سازمانی، هوش مصنوعی و تحلیل فرایندهای کسب‌وکار فعالیت می‌کند.",
-
-    industry: "Software",
-
-    country: "Iran",
-
-    businessModel: "B2B SaaS",
-
-    companySize: "11-50",
-
-    logo: "",
-}
-
-const latestAssessment: Assessment = {
-    id: 10,
-
-    enterpriseId: enterprise.id,
-
-    createdAt: "2026-02-01T08:00:00Z",
-
-    updatedAt: "2026-02-01T09:20:00Z",
-
-    name: "Initial Capability Assessment",
-
-    description:
-        "ارزیابی اولیه جهت تعیین سطح بلوغ قابلیت‌های سازمان.",
-
-    status: "completed",
-
-    overallScore: 78,
-
-    completedAt: "2026-02-01T09:20:00Z",
-}
-
-const capabilityAssessments: CapabilityAssessment[] = [
-    {
-        id: 1,
-        assessmentId: latestAssessment.id,
-        capabilityId: 1,
-        createdAt: "",
-        updatedAt: "",
-        score: 82,
-        maturityLevel: 4,
-        confidence: 91,
-        reasoning: "",
-    },
-
-    {
-        id: 2,
-        assessmentId: latestAssessment.id,
-        capabilityId: 2,
-        createdAt: "",
-        updatedAt: "",
-        score: 74,
-        maturityLevel: 3,
-        confidence: 84,
-        reasoning: "",
-    },
-
-    {
-        id: 3,
-        assessmentId: latestAssessment.id,
-        capabilityId: 3,
-        createdAt: "",
-        updatedAt: "",
-        score: 79,
-        maturityLevel: 4,
-        confidence: 88,
-        reasoning: "",
-    },
-]
-
-const dataSources: DataSource[] = [
-    {
-        id: 1,
-        enterpriseId: enterprise.id,
-        createdAt: "",
-        updatedAt: "",
-
-        name: "Microsoft Clarity",
-
-        type: "clarity",
-
-        enabled: true,
-    },
-
-    {
-        id: 2,
-        enterpriseId: enterprise.id,
-        createdAt: "",
-        updatedAt: "",
-
-        name: "Business Documents",
-
-        type: "business_document",
-
-        enabled: true,
-    },
-
-    {
-        id: 3,
-        enterpriseId: enterprise.id,
-        createdAt: "",
-        updatedAt: "",
-
-        name: "Customer Feedback",
-
-        type: "customer_feedback",
-
-        enabled: false,
-    },
-]
-
-// -----------------------------------------------------------------------------
-// Events
-// -----------------------------------------------------------------------------
-
-const onEdit = () => {
-    console.log("Edit Enterprise")
-}
-
-const onNewAssessment = () => {
-    console.log("New Assessment")
+function handleNewAssessment() {
+  navigateTo(`/enterprise/${enterpriseId.value}/assessments`)
 }
 </script>
 
 <template>
-    <div class="space-y-8">
-        <EnterpriseHeader :enterprise="enterprise" @edit="onEdit" @new-assessment="onNewAssessment" />
+  <div
+    v-if="enterprise"
+    class="space-y-8"
+  >
+    <EnterpriseHeader
+      :enterprise="enterprise"
+      @new-assessment="handleNewAssessment"
+    />
 
-        <EnterpriseTabs />
+    <EnterpriseTabs />
 
-        <section class="grid gap-6 xl:grid-cols-12">
-            <div class="space-y-6 xl:col-span-8">
-                <EnterpriseInformationCard :enterprise="enterprise" />
+    <section class="grid gap-6 xl:grid-cols-12">
+      <div class="space-y-6 xl:col-span-8">
+        <EnterpriseInformationCard :enterprise="enterprise" />
 
-                <EnterpriseLatestAssessmentCard :assessment="latestAssessment" />
+        <EnterpriseLatestAssessmentCard
+          v-if="latestCompletedAssessment"
+          :assessment="latestCompletedAssessment"
+        />
+
+        <UiEmptyState
+          v-else
+          title="No Assessments Yet"
+          description="Run your first assessment to see results here."
+          icon="lucide:clipboard-list"
+        />
+      </div>
+
+      <div class="space-y-6 xl:col-span-4">
+        <EnterpriseAssessmentSummaryCard
+          v-if="latestCompletedAssessment"
+          :assessment="latestCompletedAssessment"
+          :capability-assessments="capabilityAssessments"
+        />
+
+        <EnterpriseMaturityCard
+          v-if="latestCompletedAssessment?.overallScore"
+          :score="latestCompletedAssessment.overallScore"
+        />
+
+        <EnterpriseDataSourcesCard :sources="dataSources" />
+
+        <AppCard title="Quick Stats">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-xl bg-slate-50 p-4 text-center">
+              <div class="text-2xl font-bold text-blue-600">
+                {{ enabledSourcesCount }}
+              </div>
+              <div class="mt-1 text-xs text-slate-500">
+                Active Sources
+              </div>
             </div>
 
-            <div class="space-y-6 xl:col-span-4">
-                <EnterpriseAssessmentSummaryCard :assessment="latestAssessment"
-                    :capability-assessments="capabilityAssessments" />
-
-                <EnterpriseDataSourcesCard :sources="dataSources" />
+            <div class="rounded-xl bg-slate-50 p-4 text-center">
+              <div class="text-2xl font-bold text-blue-600">
+                {{ store.getCompletedAssessmentsForEnterprise(enterpriseId).length }}
+              </div>
+              <div class="mt-1 text-xs text-slate-500">
+                Completed
+              </div>
             </div>
-        </section>
-    </div>
+          </div>
+        </AppCard>
+      </div>
+    </section>
+  </div>
+
+  <UiEmptyState
+    v-else
+    title="Enterprise Not Found"
+    description="The requested enterprise does not exist."
+    icon="lucide:building-2"
+  />
 </template>

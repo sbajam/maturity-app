@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Row of summary stat cards (total/enabled/disabled) for enterprise data sources.
 import type { DataSource } from "~/types"
 
 const props = defineProps<{

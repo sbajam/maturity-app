@@ -1,7 +1,9 @@
+// Label/description/badge-variant lookups for pipeline steps and statuses.
 import type {
   PipelineStatus,
   PipelineStep,
 } from "~/types"
+import type { BadgeVariant } from "~/types/ui"
 
 export function getPipelineStepLabel(
   step: PipelineStep,
@@ -67,14 +69,11 @@ export function getPipelineStatusLabel(
 
 export function getPipelineStatusVariant(
   status: PipelineStatus,
-) {
-  const map = {
+): BadgeVariant {
+  const map: Record<PipelineStatus, BadgeVariant> = {
     waiting: "neutral",
-
     running: "primary",
-
     completed: "success",
-
     failed: "danger",
   }
 

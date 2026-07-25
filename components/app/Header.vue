@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Top app header containing breadcrumbs, search, notifications, and the user menu.
 </script>
 
 <template>

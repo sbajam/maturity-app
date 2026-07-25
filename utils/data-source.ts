@@ -1,27 +1,29 @@
+// Data source type label lookup and the default list of selectable source types.
 import type { DataSourceType } from "~/types"
 
 const labels: Record<DataSourceType, string> = {
-    clarity: "Microsoft Clarity",
-
-    matomo: "Matomo Analytics",
-
-    business_document: "Business Document",
-
-    capability_document: "Capability Document",
-
-    support_ticket: "Support Ticket",
-
-    customer_feedback: "Customer Feedback",
-
-    server_log: "Server Log",
-
-    event_log: "Event Log",
-
-    custom: "Custom",
+  clarity: "Microsoft Clarity",
+  matomo: "Matomo Analytics",
+  support: "Support Tickets",
+  business_document: "Business Documentation",
+  capability_excel: "Capability Excel",
+  server_log: "Server Logs",
+  event_log: "Event Logs",
+  custom: "Custom",
 }
 
 export function getDataSourceLabel(
-    type: DataSourceType,
+  type: DataSourceType,
 ) {
-    return labels[type]
+  return labels[type]
 }
+
+export const defaultDataSourceTypes: DataSourceType[] = [
+  "clarity",
+  "matomo",
+  "support",
+  "business_document",
+  "capability_excel",
+  "server_log",
+  "event_log",
+]

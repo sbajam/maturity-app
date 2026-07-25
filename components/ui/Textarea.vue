@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Base labeled multi-line text area with hint/error state support.
 const model = defineModel<string>()
 
 const props = withDefaults(
@@ -39,7 +40,7 @@ const classes = computed(() => [
             </span>
         </label>
 
-        <textarea v-model="model" :rows="rows" :disabled="disabled" :placeholder="placeholder" :class="classes" />
+        <textarea v-model="model" :rows="rows" :disabled="disabled" :placeholder="placeholder" :class="classes" class="w-full"/>
 
         <p v-if="hint && !error" class="text-xs text-slate-500">
             {{ hint }}

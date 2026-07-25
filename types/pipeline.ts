@@ -1,3 +1,4 @@
+// Assessment pipeline step/status enums and the pipeline entity type.
 import type { BaseEntity, ID } from "./common"
 
 export const PipelineSteps = [

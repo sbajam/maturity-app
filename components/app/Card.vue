@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Generic content card wrapper with optional title, description, and footer slot.
 interface Props {
     title?: string
     description?: string

@@ -1,3 +1,4 @@
+// Label/badge-variant lookups for assessment status and enabled/disabled state.
 import type {
     AssessmentStatus,
     BadgeVariant,
@@ -19,8 +20,8 @@ export function getAssessmentStatusLabel(
 
 export function getAssessmentStatusVariant(
     status: AssessmentStatus,
-) {
-    const map = {
+): BadgeVariant {
+    const map: Record<AssessmentStatus, BadgeVariant> = {
         draft: "neutral",
         running: "primary",
         completed: "success",

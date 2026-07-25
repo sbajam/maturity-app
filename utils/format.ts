@@ -1,3 +1,4 @@
+// Legacy data source type label lookup (superseded by utils/data-source.ts).
 import type {
     DataSourceType,
 } from "~/types"

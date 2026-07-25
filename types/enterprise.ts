@@ -1,3 +1,4 @@
+// Enterprise entity type.
 import type { BaseEntity } from "./common"
 
 export type Enterprise = BaseEntity & {

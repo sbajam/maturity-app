@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Single sidebar navigation item, supporting active state and collapsible children.
 import type { NavigationItem } from "~/types/navigation";
 
 const props = defineProps<{

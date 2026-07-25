@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Base labeled text input with hint/error state support.
 import { computed } from "vue"
 
 const model = defineModel<string>()

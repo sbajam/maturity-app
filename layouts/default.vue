@@ -1,3 +1,4 @@
+<!-- Default application shell composed of the sidebar, header, and main content container. -->
 <template>
   <div class="flex h-screen bg-slate-50">
 
@@ -7,7 +8,6 @@
 
       <AppHeader />
 
-      <AppBreadcrumb />
 
       <main class="flex-1 overflow-auto">
 

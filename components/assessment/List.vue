@@ -2,6 +2,7 @@
   setup
   lang="ts"
 >
+// Sidebar list of an enterprise's assessments with selection and 'new assessment' action.
 import type {
   Assessment,
 } from "~/types"
@@ -25,13 +26,11 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <UiCard class="cursor-pointer">
-
+  <AppCard>
     <div
       class="mb-5 flex items-center justify-between"
     >
       <div>
-
         <h2
           class="text-lg font-semibold"
         >
@@ -43,7 +42,6 @@ const emit = defineEmits<{
         >
           Enterprise assessment history
         </p>
-
       </div>
 
       <UiButton
@@ -53,13 +51,12 @@ const emit = defineEmits<{
       >
         New
       </UiButton>
-
     </div>
 
     <div
       class="space-y-3"
     >
-      <AssessmentCard
+      <AssessmentListItem
         v-for="assessment in items"
         :key="
           assessment.id
@@ -78,8 +75,6 @@ const emit = defineEmits<{
           )
         "
       />
-
     </div>
-
-  </UiCard>
+  </AppCard>
 </template>

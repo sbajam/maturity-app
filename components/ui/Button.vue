@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Base button component with variant, loading, and disabled states.
 type Variant =
   | "primary"
   | "secondary"

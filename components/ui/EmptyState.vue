@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Placeholder shown when a list or section has no data.
 defineProps<{
     title: string
     description?: string

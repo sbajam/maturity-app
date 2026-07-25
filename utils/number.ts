@@ -1,3 +1,4 @@
+// Numeric averaging helper.
 export function average(
     values: number[],
     digits = 1,

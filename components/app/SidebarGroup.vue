@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Renders a list of top-level sidebar navigation items.
 import type { NavigationItem } from "~/types/navigation";
 
 defineProps<{

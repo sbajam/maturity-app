@@ -1,3 +1,4 @@
+// Date formatting helper.
 export function formatDate(
     date?: string,
     locale = "en-US",

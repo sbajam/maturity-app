@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Card displaying general enterprise information (industry, country, size, description).
 import { formatDate } from "~/utils/date"
 import type { Enterprise } from "~/types"
 

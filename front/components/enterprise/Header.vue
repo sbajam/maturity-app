@@ -61,8 +61,8 @@ const emit = defineEmits<{
 
         <div class="flex shrink-0 flex-wrap gap-3">
             <button
-                class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-                @click="emit('edit')">
+                class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-400"
+                disabled title="Editing is not available">
                 <Icon name="lucide:square-pen" size="18" />
 
                 Edit

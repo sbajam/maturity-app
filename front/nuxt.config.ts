@@ -34,8 +34,10 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    apiBase: 'http://127.0.0.1:3001/api/v1',
     public: {
-      demoMode: true,
+      apiBase: 'http://127.0.0.1:3001/api/v1',
+      demoMode: false,
     }
   }
 })

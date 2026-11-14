@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({ middleware: (to) => {
+  return navigateTo(`/enterprise/${to.params.id}/assessments/${to.params.assessmentId}`, { replace: true })
+} })
 // Assessment run page hosting the 4-step wizard pipeline.
 const {
   enterpriseId,
@@ -48,6 +51,7 @@ const view = computed(() => ({
     v-if="enterprise && view.assessment"
     class="space-y-6"
   >
+    <p class="rounded-lg bg-amber-100 p-3 font-semibold text-amber-900">Demo — sample results only</p>
     <NuxtLink
       :to="`/enterprise/${enterpriseId}/assessments?id=${assessmentId}`"
       class="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600"

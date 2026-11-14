@@ -4,6 +4,10 @@ Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduct
 
 ## Setup
 
+Nuxt 4.6.4 requires Node 22.22.3 or a supported newer version; `.nvmrc` records 22.22.3. The default local API is `http://127.0.0.1:3001/api/v1`. Set `NUXT_API_BASE` for server-side requests and `NUXT_PUBLIC_API_BASE` for browser requests if the deployment uses different addresses. The backend CORS origin must match the frontend origin. Set `NUXT_PUBLIC_DEMO_MODE=true` to expose the separate `/demo` fixture view; demo results are not saved to the API.
+
+Run `npm run typecheck` with a compatible Node version. Current project-wide typecheck limitations are documented in `../backend/docs/implementation/FRONTEND_INTEGRATION.md`.
+
 Make sure to install dependencies:
 
 ```bash

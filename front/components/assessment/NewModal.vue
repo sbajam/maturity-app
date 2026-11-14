@@ -3,6 +3,7 @@
 const open = defineModel<boolean>("open", {
   default: false,
 })
+defineProps<{ error?: string; loading?: boolean }>()
 
 const emit = defineEmits<{
   create: [{
@@ -32,8 +33,6 @@ function submit() {
     version: version.value.trim() || "1.0",
   })
 
-  reset()
-  open.value = false
 }
 
 watch(open, (value) => {
@@ -104,10 +103,11 @@ watch(open, (value) => {
             Cancel
           </UiButton>
 
-          <UiButton @click="submit">
+          <UiButton :disabled="loading" @click="submit">
             Create
           </UiButton>
         </div>
+        <p v-if="error" role="alert" class="mt-3 text-sm text-red-700">{{ error }}</p>
       </div>
     </div>
   </Teleport>

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({ middleware: (to) => {
+  return navigateTo(`/enterprise/${to.params.id}/assessments/${to.params.assessmentId}`, { replace: true })
+} })
 // Full assessment report page: overview, pipeline, timeline, and capability results.
 const {
   enterpriseId,
@@ -49,6 +52,7 @@ function printPage() {
     v-if="enterprise && assessment"
     class="space-y-6"
   >
+    <p class="rounded-lg bg-amber-100 p-3 font-semibold text-amber-900">Demo — sample results only</p>
     <EnterpriseHeader :enterprise="enterprise" />
 
     <EnterpriseTabs />

@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const completed = computed(() =>
   [...props.assessments]
-    .filter(item => item.status === "completed" && item.overallScore)
+    .filter(item => item.status === "completed" && item.overallScore !== undefined && item.overallScore !== null)
     .sort(
       (a, b) =>
         new Date(a.completedAt ?? a.createdAt).getTime()
@@ -77,7 +77,7 @@ const maxScore = 5
             </div>
 
             <p
-              v-if="index > 0 && completed[index - 1].overallScore"
+              v-if="index > 0 && completed[index - 1]?.overallScore != null"
               class="mt-2 text-xs"
               :class="(item.overallScore ?? 0) > (completed[index - 1].overallScore ?? 0)
                 ? 'text-green-600'

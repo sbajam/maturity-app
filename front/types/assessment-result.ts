@@ -9,13 +9,14 @@ export type CapabilityAssessment =
     capabilityId: ID
 
     /** Likert scale 1-5 */
-    score: number
+    score: number | null
 
     /** Maturity level 1-5 */
-    maturityLevel: number
+    maturityLevel: number | null
 
     /** 0-1 */
-    confidence: number
+    confidence: number | null
 
+    status?: "assessed" | "insufficient_evidence"
     reasoning: string
 }

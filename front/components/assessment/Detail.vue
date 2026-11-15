@@ -14,10 +14,12 @@ const props = defineProps<{
   mappings: CapabilityEvidenceMapping[]
   enterpriseId: number
   isRunning?: boolean
+  demo?: boolean
 }>()
 
 const canRun = computed(() =>
-  props.assessment
+  props.demo
+  && props.assessment
   && (props.assessment.status === "draft"
     || props.assessment.status === "failed")
   && !props.isRunning,
@@ -66,6 +68,16 @@ const reportUrl = computed(() =>
       </NuxtLink>
 
       <NuxtLink
+        v-if="demo && canViewReport"
+        :to="runUrl"
+      >
+        <UiButton variant="outline">
+          <Icon name="lucide:workflow" class="h-4 w-4" />
+          Review Wizard Steps
+        </UiButton>
+      </NuxtLink>
+
+      <NuxtLink
         v-if="canViewReport"
         :to="reportUrl"
       >
@@ -76,7 +88,7 @@ const reportUrl = computed(() =>
       </NuxtLink>
 
       <NuxtLink
-        v-if="assessment.status === 'running'"
+        v-if="demo && assessment.status === 'running'"
         :to="runUrl"
       >
         <UiButton variant="outline">

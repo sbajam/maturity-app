@@ -24,7 +24,7 @@ const hasChildren = computed(() =>
 )
 
 const cellClass = computed(() => {
-  if (!assessment.value)
+  if (!assessment.value || assessment.value.score === null)
     return "border-slate-200 bg-slate-50 text-slate-500"
 
   return getMaturityTileClass(assessment.value.maturityLevel)

@@ -8,6 +8,7 @@ import { getEnabledLabel, getEnabledVariant } from "~/utils/status"
 const props = defineProps<{
   capabilities: Capability[]
   dataSources: DataSource[]
+  readOnly?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -157,7 +158,7 @@ const businessSources = computed(() =>
     </div>
 
     <div class="flex justify-end border-t border-slate-100 pt-6">
-      <UiButton @click="emit('continue')">
+      <UiButton v-if="!readOnly" @click="emit('continue')">
         Confirm & Continue
         <Icon name="lucide:arrow-right" class="h-4 w-4" />
       </UiButton>

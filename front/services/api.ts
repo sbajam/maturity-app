@@ -14,13 +14,13 @@ export interface ApiDataSource {
 }
 export interface ApiAssessment {
   id: number; enterpriseId: number; name: string; description: string | null
-  version: string; status: 'draft'; createdAt: string; updatedAt: string
+  version: string; status: 'draft'|'running'|'completed'|'failed'; overallScore?: number|null; completedAt?: string|null; createdAt: string; updatedAt: string
 }
 export interface ApiDocument {
   id: number; dataSourceId: number; originalName: string; mediaType: string
   sizeBytes: number; sha256: string; createdAt: string; updatedAt: string
 }
-export interface ApiDashboard { enterpriseCount: number; enabledSourceCount: number; draftAssessmentCount: number; latestResult: null }
+export interface ApiDashboard { enterpriseCount: number; enabledSourceCount: number; draftAssessmentCount: number; latestResult: {assessmentId:number;enterpriseId:number;name:string;overallScore:number|null}|null }
 export interface ApiFieldError { path: string; message: string }
 
 export function validRouteId(value: unknown): value is string {
@@ -66,6 +66,11 @@ export function createApi(baseURL: string) {
     getAssessment: (id: number, assessmentId: number) => call<ApiResponse<ApiAssessment>>(`${assessments(id)}/${assessmentId}`),
     createAssessment: (id: number, body: { name: string; description?: string | null; version?: string }) => call<ApiResponse<ApiAssessment>>(assessments(id), { method: 'POST', body }),
     deleteAssessment: (id: number, assessmentId: number) => call<void>(`${assessments(id)}/${assessmentId}`, { method: 'DELETE' }),
+    getDossier: (id: number, assessmentId: number) => call<ApiResponse<ApiDossier>>(`${assessments(id)}/${assessmentId}/full`),
+    prepareDemo: (id: number, assessmentId: number) => call<ApiResponse<ApiDossier>>(`${assessments(id)}/${assessmentId}/demo/prepare`, {method:'POST'}),
+    finalizeDemo: (id: number, assessmentId: number) => call<ApiResponse<ApiDossier>>(`${assessments(id)}/${assessmentId}/demo/finalize`, {method:'POST'}),
+    reviewDemoMapping: (id: number, assessmentId: number, mappingId: number, reviewStatus:'approved'|'rejected'|'irrelevant') => call<ApiResponse<ApiDossier>>(`${assessments(id)}/${assessmentId}/mappings/${mappingId}/review`, {method:'PATCH',body:{reviewStatus}}),
+    getCapabilities: (id:number) => call<ApiResponse<{frameworkVersionId:number|null;capabilities:ApiCapability[]}>>(`${enterprise(id)}/capabilities`),
     dashboard: () => call<ApiResponse<ApiDashboard>>('/dashboard'),
     listDocuments: (id: number, sourceId: number, page = 1, pageSize = 20) => call<ApiList<ApiDocument>>(documents(id, sourceId), { query: { page, pageSize } }),
     uploadDocument: (id: number, sourceId: number, file: File) => { const body = new FormData(); body.append('file', file); return call<ApiResponse<ApiDocument>>(documents(id, sourceId), { method: 'POST', body }) },
@@ -81,4 +86,41 @@ export function createApi(baseURL: string) {
     },
     deleteDocument: (id: number, sourceId: number, documentId: number) => call<void>(`${documents(id, sourceId)}/${documentId}`, { method: 'DELETE' }),
   }
+}
+
+// Same domain contract for a seeded demonstration and future real AI output.
+// The server marks simulated material; no UI component infers this from a fake LLM call.
+export interface ApiCapability {
+  id:number; frameworkVersionId:number; parentId:number|null; name:string; description:string|null;
+  level:number; order:number; sourceRow:number|null
+}
+export interface ApiEvidence {
+  id:number; assessmentId:number; dataSourceId:number; sourceRecordId:number; title:string;
+  evidenceType:string; content:string; context:Record<string,unknown>; metadata:Record<string,unknown>;
+  provenance:Record<string,unknown>; origin:'simulated'|'real_ai'|'deterministic'; createdAt:string; updatedAt:string
+}
+export interface ApiMapping {
+  id:number; assessmentId:number; capabilityId:number; evidenceId:number;
+  confidence:number; reasoning:string; reviewStatus:'pending'|'approved'|'rejected'|'irrelevant';
+  approved:boolean; origin:string; createdAt:string; updatedAt:string
+}
+export interface ApiCapabilityScore {
+  id:number; assessmentId:number; capabilityId:number; score:number|null; maturityLevel:number|null;
+  confidence:number|null; reasoning:string; status:'assessed'|'insufficient_evidence';
+  origin:string; createdAt:string; updatedAt:string
+}
+export interface ApiPipelineStep {
+  id:number; assessmentId:number; step:'collect_sources'|'extract_evidence'|'mapping'|'assessment'|'aggregation'|'report';
+  status:'waiting'|'running'|'completed'|'failed'; startedAt:string|null; completedAt:string|null;
+  createdAt:string; updatedAt:string
+}
+export interface ApiDossier {
+  enterpriseId:number;
+  assessment:ApiAssessment & {overallScore:number|null; completedAt:string|null};
+  sources:ApiDataSource[]; capabilities:ApiCapability[]; evidences:ApiEvidence[]; mappings:ApiMapping[];
+  leafEvaluations:ApiCapabilityScore[]; capabilityAssessments:ApiCapabilityScore[];
+  pipeline:ApiPipelineStep[];
+  report:{recommendations:string[];summary:Record<string,unknown>;origin:string}|null;
+  snapshot:{frameworkVersionId:number;selectedSourceIds:number[];selectedCapabilityIds:number[];origin:string}|null;
+  analysisMode:'simulated'|'not_available';displayWarning:string|null
 }

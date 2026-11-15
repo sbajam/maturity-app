@@ -43,7 +43,7 @@ defineProps<{
     </div>
 
     <div
-      v-if="assessment.overallScore"
+      v-if="assessment.overallScore !== undefined && assessment.overallScore !== null"
       class="mt-3 text-sm font-medium text-blue-600"
     >
       {{ formatScore(assessment.overallScore) }}

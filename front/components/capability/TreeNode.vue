@@ -39,7 +39,7 @@ const emit = defineEmits<{
       <span
         v-else
         class="h-2 w-2 shrink-0 rounded-full"
-        :class="assessmentMap.get(node.id)
+        :class="assessmentMap.get(node.id)?.score !== null && assessmentMap.get(node.id)
           ? getMaturityColorClass(assessmentMap.get(node.id)!.maturityLevel)
           : 'bg-slate-300'"
       />

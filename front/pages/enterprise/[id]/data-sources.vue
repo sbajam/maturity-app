@@ -93,11 +93,11 @@ async function download(sourceId: number, item: ApiDocument) {
         <div class="flex gap-2"><UiButton variant="ghost" @click="toggle(source)">{{ source.enabled ? 'Disable' : 'Enable' }}</UiButton><UiButton variant="ghost" @click="openEdit(source)">Edit</UiButton><UiButton variant="ghost" @click="remove(source)">Delete</UiButton></div>
       </div>
       <p v-if="source.description" class="text-sm text-slate-600">{{ source.description }}</p>
-      <div v-if="source.type === 'business_document'" class="space-y-2 border-t pt-3">
+      <div v-if="(source.type === 'business_document' || source.type === 'capability_excel')" class="space-y-2 border-t pt-3">
         <p v-if="source.businessText" class="whitespace-pre-wrap text-sm">{{ source.businessText }}</p>
-        <div class="flex flex-wrap items-center gap-3"><input type="file" accept=".pdf,.docx,.txt" @change="upload(source.id, $event)"><button class="text-sm text-blue-700 underline" @click="loadDocuments(source.id)">Show documents</button></div>
+        <div class="flex flex-wrap items-center gap-3"><input v-if="source.type === 'business_document'" type="file" accept=".pdf,.docx,.txt" @change="upload(source.id, $event)"><button class="text-sm text-blue-700 underline" @click="loadDocuments(source.id)">Show documents</button></div>
         <p v-if="documents[source.id] && !documents[source.id]?.length" class="text-sm text-slate-500">No documents on this page.</p>
-        <div v-for="item in documents[source.id] ?? []" :key="item.id" class="flex items-center gap-3 text-sm"><span>{{ item.originalName }}</span><button class="text-blue-700 underline" @click="download(source.id, item)">Download</button><button class="text-red-700 underline" @click="removeDocument(source.id, item)">Delete</button></div>
+        <div v-for="item in documents[source.id] ?? []" :key="item.id" class="flex items-center gap-3 text-sm"><span>{{ item.originalName }}</span><button class="text-blue-700 underline" @click="download(source.id, item)">Download</button><button v-if="source.type === 'business_document'" class="text-red-700 underline" @click="removeDocument(source.id, item)">Delete</button></div>
         <div v-if="documents[source.id]" class="flex gap-2 text-sm"><button :disabled="(documentPages[source.id] || 1) <= 1" @click="loadDocuments(source.id, (documentPages[source.id] || 1) - 1)">Previous</button><span>Page {{ documentPages[source.id] }}</span><button :disabled="(documentPages[source.id] || 1) * 20 >= (documentTotals[source.id] || 0)" @click="loadDocuments(source.id, (documentPages[source.id] || 1) + 1)">Next</button></div>
       </div>
     </div>

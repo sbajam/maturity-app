@@ -2,8 +2,10 @@
 // Animated AI analysis step with progress bar and rotating status messages.
 import { AI_LOADING_MESSAGES } from "~/utils/wizard"
 
+const demo = useAppMode()
 const props = defineProps<{
   running?: boolean
+  readOnly?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -43,7 +45,7 @@ function startAnimation() {
 }
 
 onMounted(() => {
-  if (props.running !== false)
+  if (!props.readOnly && props.running !== false)
     startAnimation()
 })
 
@@ -54,7 +56,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-20">
+  <div v-if="readOnly" class="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-16 text-center">
+    <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+      <Icon name="lucide:brain" class="h-8 w-8" />
+    </div>
+    <h2 class="text-xl font-bold text-slate-900">Simulated AI Analysis — Historical Review</h2>
+    <p class="mt-3 max-w-lg text-sm leading-7 text-slate-600">
+      This completed assessment used pre-generated illustrative data. No model is being called now.
+      Review the saved capability scores and reasoning in Results.
+    </p>
+  </div>
+  <div v-else class="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-20">
     <!-- AI Avatar -->
     <div class="relative mb-8">
       <div class="absolute inset-0 animate-ping rounded-full bg-blue-400 opacity-20" />
@@ -64,11 +76,11 @@ onUnmounted(() => {
     </div>
 
     <h2 class="text-2xl font-bold text-slate-900">
-      AI Analysis in Progress
+      {{ demo ? 'Simulated AI Analysis' : 'AI Analysis in Progress' }}
     </h2>
 
     <p class="mt-2 max-w-md text-center text-sm text-slate-500">
-      Our AI is evaluating capability maturity based on your approved evidence mappings.
+      {{ demo ? "در حالت Demo ارزیابی نمایشی در Backend ثبت می‌شود؛ هیچ فراخوانی LLM انجام نمی‌شود." : "Our AI is evaluating capability maturity based on your approved evidence mappings." }}
     </p>
 
     <!-- Progress -->

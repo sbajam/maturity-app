@@ -1,6 +1,12 @@
 <script setup lang="ts">
 // Main navigation sidebar containing the logo, nav groups, and user menu.
-import { navigation } from "~/constants/navigation";
+import type { NavigationItem } from "~/types/navigation"
+
+// Nuxt component-local configuration: navigation is only consumed by this Sidebar.
+const navigation: NavigationItem[] = [
+  { title: "Dashboard", icon: "lucide:layout-dashboard", to: "/" },
+  { title: "Enterprises", icon: "lucide:building-2", to: "/enterprise" },
+]
 </script>
 
 <template>

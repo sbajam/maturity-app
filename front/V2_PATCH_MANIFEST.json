@@ -1,0 +1,152 @@
+{
+  "patch": "Vendow Maturity App V2",
+  "project": "front",
+  "source": "front.zip",
+  "file_count": 23,
+  "content": [
+    {
+      "path": "front/.env.demo.example",
+      "action": "added",
+      "sha256": "eb863c18f89883a4686ce628dfd180846fcd56b8f74f58c52e16ac995f2d3912",
+      "bytes": 191
+    },
+    {
+      "path": "front/components/assessment/Timeline.vue",
+      "action": "modified",
+      "sha256": "3457999fb1fb1e1e7e1336e4b3ca6a9360e1c98b5f71066741cfb6d11a783dbd",
+      "bytes": 3170
+    },
+    {
+      "path": "front/components/assessment/wizard/StepAiLoading.vue",
+      "action": "modified",
+      "sha256": "8bb41e6c58197f722d83fec285fe31434bb5454aaf655dc47f6e534a7f8c872f",
+      "bytes": 3590
+    },
+    {
+      "path": "front/components/capability/HeatmapNode.vue",
+      "action": "modified",
+      "sha256": "a4e3579b598f8a8d8c38582da5ee8767819fe37266e6bfcbdea84533cf1761ed",
+      "bytes": 2637
+    },
+    {
+      "path": "front/components/capability/ScoreTable.vue",
+      "action": "modified",
+      "sha256": "aeb97d6512b1c0ef3e3b145361e0faef437246231663037d03c43589ec3af11e",
+      "bytes": 3580
+    },
+    {
+      "path": "front/components/capability/TreeNode.vue",
+      "action": "modified",
+      "sha256": "2c4e72b9d4d5474a426abb9f4f36bed367fbb3e8da5a88a3bceacaa852ec2856",
+      "bytes": 2103
+    },
+    {
+      "path": "front/composables/useAppMode.ts",
+      "action": "added",
+      "sha256": "ebec91c0f0be054c3b137ad7bd01cf1b7e3109a40be3aaec07db5f58160d2ff2",
+      "bytes": 84
+    },
+    {
+      "path": "front/composables/useMockStore.ts",
+      "action": "modified",
+      "sha256": "5f12c48203e8fa0d55c07bd954461ae003acd0115a1b0fd1778f690209d2bd5a",
+      "bytes": 14947
+    },
+    {
+      "path": "front/nuxt.config.ts",
+      "action": "modified",
+      "sha256": "c59bf8d2e6b83f148d9e99aa15fefefb87a28182221f8c6760ecea172b0fcb9c",
+      "bytes": 864
+    },
+    {
+      "path": "front/pages/demo.vue",
+      "action": "modified",
+      "sha256": "22c4ba32836c3858afcc11b9777e6db2c870dab47031ef9a7650ae19fae4b05b",
+      "bytes": 370
+    },
+    {
+      "path": "front/pages/enterprise/[id]/assessments/[assessmentId]/index.vue",
+      "action": "modified",
+      "sha256": "6122d72e16637afc9a28da942e92830c6416e252ee54be192f6cbb96beaffe77",
+      "bytes": 2472
+    },
+    {
+      "path": "front/pages/enterprise/[id]/assessments/[assessmentId]/report.vue",
+      "action": "modified",
+      "sha256": "4ed15d71ebc208a0965c499846d007db51675c42e46725d9c0e663e177c1ac92",
+      "bytes": 3746
+    },
+    {
+      "path": "front/pages/enterprise/[id]/assessments/[assessmentId]/run.vue",
+      "action": "modified",
+      "sha256": "4936259c1b4d97ce9514d6fa3f5497526dd4a59628767cbce7adc5bc1e60beec",
+      "bytes": 4772
+    },
+    {
+      "path": "front/pages/enterprise/[id]/assessments/index.vue",
+      "action": "modified",
+      "sha256": "530b6a2dd4207e4b6bd7e6bec3e5904b907d4830d8091c2c9fd7ba23fa7f3198",
+      "bytes": 4577
+    },
+    {
+      "path": "front/pages/enterprise/[id]/data-sources.vue",
+      "action": "modified",
+      "sha256": "675a4510798d0daa34d2bac9aaa9b563921cb701485e8501d4b4f3517bea03f2",
+      "bytes": 9781
+    },
+    {
+      "path": "front/pages/enterprise/[id]/index.vue",
+      "action": "modified",
+      "sha256": "d905783c71218214359b6aa587fa95760e1bfb708a67620c2a8ae717e3741921",
+      "bytes": 2833
+    },
+    {
+      "path": "front/pages/enterprise/[id]/reports.vue",
+      "action": "modified",
+      "sha256": "3badb135141927960b866658c2441936782d5f6f8920fe46566bc4309dce4c69",
+      "bytes": 1859
+    },
+    {
+      "path": "front/pages/index.vue",
+      "action": "modified",
+      "sha256": "416ad01af9e8d2224bd34f96b1d77631c51e02cbcc17a4ab4196a1ac169edbf0",
+      "bytes": 2239
+    },
+    {
+      "path": "front/services/api.ts",
+      "action": "modified",
+      "sha256": "efa19f9bab4e4f30c633076bf88e90b1b9b33b0e5b0fb285d805979375f2d566",
+      "bytes": 9416
+    },
+    {
+      "path": "front/types/assessment-result.ts",
+      "action": "modified",
+      "sha256": "b6c12f7b571a9062d9e0eeb8f8107b0999287a19d7a2589b9fa35af752d8fe7a",
+      "bytes": 458
+    },
+    {
+      "path": "front/utils/capability.ts",
+      "action": "modified",
+      "sha256": "958f4479c30bf766e8cef919c0ee7e012350cfb88d1a55871745a821f5b2b4d0",
+      "bytes": 3177
+    },
+    {
+      "path": "front/utils/dossier-view.ts",
+      "action": "added",
+      "sha256": "892f2f8c7d09a91fee27315e79f5c5acce5e5a39217d591becdb07259209475d",
+      "bytes": 2052
+    },
+    {
+      "path": "front/utils/maturity.ts",
+      "action": "modified",
+      "sha256": "a8ba3118233f7a9c336228cbeae57e24a1b857b65a9dafafeb9152140a9f9a28",
+      "bytes": 2903
+    }
+  ],
+  "unverified": [
+    "npm typecheck",
+    "Nuxt/TS build",
+    "PostgreSQL migration and seed",
+    "browser E2E"
+  ]
+}

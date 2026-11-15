@@ -14,6 +14,7 @@ const props = defineProps<{
   evidence: Evidence[]
   mappings: CapabilityEvidenceMapping[]
   loading?: boolean
+  readOnly?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -273,6 +274,7 @@ function statusVariant(status?: MappingReviewStatus) {
                   </UiBadge>
 
                   <UiButton
+                    v-if="!readOnly"
                     variant="outline"
                     :class="mapping.reviewStatus === 'approved' ? 'border-green-500 bg-green-50 text-green-700' : ''"
                     @click="emit('review', mapping.id, 'approved')"
@@ -282,6 +284,7 @@ function statusVariant(status?: MappingReviewStatus) {
                   </UiButton>
 
                   <UiButton
+                    v-if="!readOnly"
                     variant="ghost"
                     :class="mapping.reviewStatus === 'rejected' ? 'bg-red-50 text-red-700' : ''"
                     @click="emit('review', mapping.id, 'rejected')"
@@ -291,6 +294,7 @@ function statusVariant(status?: MappingReviewStatus) {
                   </UiButton>
 
                   <UiButton
+                    v-if="!readOnly"
                     variant="ghost"
                     :class="mapping.reviewStatus === 'irrelevant' ? 'bg-amber-50 text-amber-700' : ''"
                     @click="emit('review', mapping.id, 'irrelevant')"
@@ -306,7 +310,7 @@ function statusVariant(status?: MappingReviewStatus) {
       </div>
 
       <!-- Footer actions -->
-      <div class="flex items-center justify-between border-t border-slate-100 pt-6">
+      <div v-if="!readOnly" class="flex items-center justify-between border-t border-slate-100 pt-6">
         <UiButton
           variant="ghost"
           @click="emit('back')"

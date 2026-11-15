@@ -1,6 +1,6 @@
 // Formatting and color-mapping helpers for maturity scores, confidence, and heatmap tiles.
 /** Format Likert score for display (e.g. 3.8 / 5) */
-export function formatScore(score?: number): string {
+export function formatScore(score?: number | null): string {
   if (score === undefined || score === null)
     return "—"
 
@@ -8,7 +8,8 @@ export function formatScore(score?: number): string {
 }
 
 /** Format confidence as percentage (0.94 → 94%) */
-export function formatConfidence(confidence: number): string {
+export function formatConfidence(confidence: number | null | undefined): string {
+  if (confidence === null || confidence === undefined) return "—"
   const value = confidence <= 1
     ? confidence * 100
     : confidence
@@ -17,7 +18,9 @@ export function formatConfidence(confidence: number): string {
 }
 
 /** Map maturity level to heatmap color class */
-export function getMaturityColorClass(level: number): string {
+export function getMaturityColorClass(level: number | null): string {
+  if (level === null) return "bg-slate-300"
+
   if (level >= 4)
     return "bg-green-500"
 
@@ -31,7 +34,9 @@ export function getMaturityColorClass(level: number): string {
 }
 
 /** Map maturity level to text color class */
-export function getMaturityTextClass(level: number): string {
+export function getMaturityTextClass(level: number | null): string {
+  if (level === null) return "text-slate-500"
+
   if (level >= 4)
     return "text-green-700"
 
@@ -45,7 +50,9 @@ export function getMaturityTextClass(level: number): string {
 }
 
 /** Soft card background + text for heatmap tiles */
-export function getMaturityTileClass(level: number): string {
+export function getMaturityTileClass(level: number | null): string {
+  if (level === null) return "border-slate-200 bg-slate-50 text-slate-500"
+
   if (level >= 4)
     return "border-green-200 bg-green-100 text-green-900"
 
@@ -59,7 +66,9 @@ export function getMaturityTileClass(level: number): string {
 }
 
 /** Subtle row background for heatmap table */
-export function getMaturityHeatmapRowClass(level: number): string {
+export function getMaturityHeatmapRowClass(level: number | null): string {
+  if (level === null) return "bg-slate-50"
+
   if (level >= 4)
     return "bg-green-50 hover:bg-green-100/90"
 
@@ -73,7 +82,9 @@ export function getMaturityHeatmapRowClass(level: number): string {
 }
 
 /** Strong cell fill for heatmap score blocks */
-export function getMaturityHeatmapCellClass(level: number): string {
+export function getMaturityHeatmapCellClass(level: number | null): string {
+  if (level === null) return "bg-slate-200 text-slate-700"
+
   if (level >= 4)
     return "bg-green-500 text-white"
 
@@ -88,8 +99,9 @@ export function getMaturityHeatmapCellClass(level: number): string {
 
 /** Map maturity level to badge variant */
 export function getMaturityBadgeVariant(
-  level: number,
+  level: number | null,
 ): "success" | "warning" | "danger" | "neutral" {
+  if (level === null) return "neutral"
   if (level >= 4)
     return "success"
 

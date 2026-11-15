@@ -408,7 +408,8 @@ export function useMockStore() {
     ).map(item => item.score)
 
     assessment.status = "completed"
-    assessment.overallScore = average(leafScores)
+    assessment.overallScore = leafScores.length && leafScores.every(score => score !== null)
+      ? average(leafScores as number[]) : undefined
     assessment.completedAt = new Date().toISOString()
     assessment.updatedAt = new Date().toISOString()
     runningAssessmentId.value = null
@@ -502,7 +503,8 @@ export function useMockStore() {
     )
 
     assessment.status = "completed"
-    assessment.overallScore = average(leafScores)
+    assessment.overallScore = leafScores.length && leafScores.every(score => score !== null)
+      ? average(leafScores as number[]) : undefined
     assessment.completedAt = new Date().toISOString()
     assessment.updatedAt = new Date().toISOString()
   }

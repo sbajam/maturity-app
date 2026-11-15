@@ -73,39 +73,26 @@ export function aggregateParentAssessments(
     if (node.children.length === 0)
       return assessmentMap.get(node.id) ?? null
 
-    const childResults = node.children
-      .map(child => aggregate(child))
-      .filter(
-        (item): item is CapabilityAssessment =>
-          item !== null,
-      )
+    const childResults = node.children.map(child => aggregate(child))
+    const valid = childResults.every(item => item !== null && item.score !== null)
+    const first = childResults.find((item): item is CapabilityAssessment => item !== null)
+    if (!first) return null
 
-    if (!childResults.length)
-      return null
-
-    const scores = childResults.map(item => item.score)
-    const levels = childResults.map(
-      item => item.maturityLevel,
-    )
-    const confidences = childResults.map(
-      item => item.confidence,
-    )
-
+    const score = valid ? average(childResults.map(item => item!.score!)) : null
+    const confidences = childResults.map(item => item?.confidence).filter((x): x is number => x !== null && x !== undefined)
     const result: CapabilityAssessment = {
-      id: node.id,
-      assessmentId: childResults[0].assessmentId,
+      id: -node.id,
+      assessmentId: first.assessmentId,
       capabilityId: node.id,
-      score: average(scores),
-      maturityLevel: Math.round(average(levels)),
-      confidence: average(confidences, 2),
-      reasoning:
-        "Aggregated from child capability assessments.",
-      createdAt: childResults[0].createdAt,
-      updatedAt: childResults[0].updatedAt,
+      score,
+      maturityLevel: score === null ? null : Math.round(score),
+      confidence: valid && confidences.length === childResults.length ? average(confidences, 2) : null,
+      reasoning: valid ? 'Simple mean of all direct children.' : 'Assessment incomplete: at least one child has no valid score.',
+      status: valid ? 'assessed' : 'insufficient_evidence',
+      createdAt: first.createdAt,
+      updatedAt: first.updatedAt,
     }
-
     assessmentMap.set(node.id, result)
-
     return result
   }
 

@@ -17,9 +17,9 @@ type ScoreRow = {
   id: number
   name: string
   level: number
-  score: number
-  maturityLevel: number
-  confidence: number
+  score: number | null
+  maturityLevel: number | null
+  confidence: number | null
   evidenceCount: number
   isLeaf: boolean
 }
@@ -117,7 +117,7 @@ const columns: DataTableColumn<ScoreRow>[] = [
 
     <template #cell-maturity="{ row }">
       <UiBadge :variant="getMaturityBadgeVariant(row.maturityLevel)">
-        L{{ row.maturityLevel }}
+        {{ row.maturityLevel === null ? "ارزیابی ناقص" : `L${row.maturityLevel}` }}
       </UiBadge>
     </template>
 

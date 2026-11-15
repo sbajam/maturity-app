@@ -5,15 +5,16 @@ import { validRouteId } from '~/services/api'
 const route = useRoute()
 const api = useApi()
 const enterpriseId = computed(() => Number(route.params.id))
+const demo = useAppMode()
 const validId = computed(() => validRouteId(route.params.id))
 const { data, pending, error, refresh } = await useAsyncData(
   () => `enterprise-overview-${route.params.id}`,
   async () => {
     if (!validId.value) throw createError({ statusCode: 404, statusMessage: 'Enterprise not found' })
     const [enterprise, sources, assessments] = await Promise.all([
-      api.getEnterprise(enterpriseId.value), api.listSources(enterpriseId.value, 1, 1), api.listAssessments(enterpriseId.value, 1, 1),
+      api.getEnterprise(enterpriseId.value), api.listSources(enterpriseId.value, 1, 1), api.listAssessments(enterpriseId.value, 1, 50),
     ])
-    return { enterprise: enterprise.data, sourceCount: sources.pagination.total, assessmentCount: assessments.pagination.total }
+    return { enterprise: enterprise.data, sourceCount: sources.pagination.total, assessmentCount: assessments.pagination.total, latestCompleted: assessments.data.find(a => a.status === "completed") ?? null }
   },
   { watch: [enterpriseId] },
 )
@@ -34,9 +35,14 @@ const enterprise = computed<Enterprise | undefined>(() => {
       <EnterpriseInformationCard :enterprise="enterprise" />
       <AppCard title="Overview">
         <p>Data sources: {{ data.sourceCount }}</p>
-        <p>Draft assessments: {{ data.assessmentCount }}</p>
+        <p>Assessments: {{ data.assessmentCount }}</p>
       </AppCard>
     </div>
-    <UiEmptyState title="No assessment results" description="Scientific assessment results are not available yet." icon="lucide:clipboard-list" />
+    <AppCard v-if="data.latestCompleted" title="Latest completed assessment">
+      <p class="font-medium">{{ data.latestCompleted.name }}</p>
+      <p v-if="demo" class="text-sm text-amber-700">نتایج نمونه و غیرواقعی — بدون اجرای LLM</p>
+      <NuxtLink :to="`/enterprise/${enterpriseId}/assessments/${data.latestCompleted.id}/report`" class="text-sm text-blue-700 underline">View report</NuxtLink>
+    </AppCard>
+    <UiEmptyState v-else title="No assessment results" description="No completed assessment yet." icon="lucide:clipboard-list" />
   </div>
 </template>
